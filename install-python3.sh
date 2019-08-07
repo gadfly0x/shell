@@ -26,12 +26,14 @@ mkdir -p $installPath
 make && make install
 
 #2和3共存
-# ln -s /usr/local/python3/bin/python3 /usr/bin/python3
-# ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+ln -s /usr/local/python3/bin/python3 /usr/bin/python3
+ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
 
-# 替换
-mv /usr/bin/python /usr/bin/python2.6.6
-ln -sf /usr/bin/python2.6.6 /usr/bin/python2
-ln -s /usr/local/python3/bin/python3 /usr/bin/python
-ln -s /usr/local/python3/bin/pip3 /usr/bin/pip
-sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python2/g' /usr/bin/yum
+# # 替换
+# mv /usr/bin/python /usr/bin/python2.6.6
+# ln -sf /usr/bin/python2.6.6 /usr/bin/python2
+# ln -s /usr/local/python3/bin/python3 /usr/bin/python
+# ln -s /usr/local/python3/bin/pip3 /usr/bin/pip
+# sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python2/g' /usr/bin/yum
+
+pip3 install --upgrade pip
