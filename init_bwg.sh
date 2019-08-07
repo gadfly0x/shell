@@ -25,7 +25,7 @@ echo "${name}    ALL=(ALL)       ALL" >> /etc/sudoers
 #禁用密码登录
 cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
 sed -i "s/^PasswordAuthentication yes/PasswordAuthentication no/g" /etc/ssh/sshd_config
-#禁止root登录
+#不允许root用户以ssh方式登陆
 sed -i "s/^PermitRootLogin yes/PermitRootLogin no/g" /etc/ssh/sshd_config
 #比较修改后的文件差异
 diff /etc/ssh/sshd_config /etc/ssh/sshd_config.bak
@@ -45,6 +45,18 @@ chmod 700 .ssh
 chgrp $name .ssh
 chown $name .ssh
 read -p "Please input new public key:" public_key
-echo 'ssh-rsa ${public_key} ${name}' /home/$name/.ssh/authorized_keys
+echo "ssh-rsa ${public_key} ${name}" > /home/$name/.ssh/authorized_keys
 chgrp $name /home/$name/.ssh/authorized_keys
 chown $name /home/$name/.ssh/authorized_keys
+
+
+### 禁用端口
+# 启动
+systemctl start firewalld
+# 开机启动
+systemctl enable firewalld
+# 获取ssh端口
+ssh_port=`netstat -ntlp|grep sshd |awk -F: '{if($4!="")print $4}'`
+firewall-cmd --zone=public --add-port=$ssh_port/tcp --permanent
+systemctl restart firewalld
+
