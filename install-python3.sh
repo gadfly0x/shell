@@ -3,7 +3,7 @@
 url='https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz'
 installPath='/usr/local/python3'
 
-yum install -y gcc zlib-devel readline-devel openssl-devel
+yum install -y gcc zlib-devel readline-devel openssl-devel automake autoconf libtool make bzip2 bzip2-devel sqlite-devel
 if [[ $? -ne 0 ]]; then
     echo 'It failed to install gcc.'
 fi
@@ -37,3 +37,4 @@ ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
 # sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python2/g' /usr/bin/yum
 
 pip3 install --upgrade pip
+pip3 install requests jupyter pymysql redis
